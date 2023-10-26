@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Painter : MonoBehaviour
 {
+    public float stepSize;
     LineRenderer line;
 
     void Start()
@@ -11,14 +12,29 @@ public class Painter : MonoBehaviour
 
     void Update()
     {
-        AddPoint(Input.mousePosition);
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            AddPoint(Input.mousePosition);
+        }
     }
 
     public void AddPoint(Vector3 screenPos)
     {
-        line.positionCount++;
         var pos = Camera.main.ScreenToWorldPoint(screenPos);
         pos.z = 0;
-        line.SetPosition(line.positionCount-1,pos);
+
+        if (line.positionCount == 0)
+        {
+            line.positionCount++;
+            line.SetPosition(line.positionCount-1,pos);
+            return;
+        }
+
+        var lastPoint = line.GetPosition(line.positionCount - 1);
+        if (Vector3.Distance(pos, lastPoint) > stepSize)
+        {
+            line.positionCount++;
+            line.SetPosition(line.positionCount-1,pos);
+        }
     }
 }
