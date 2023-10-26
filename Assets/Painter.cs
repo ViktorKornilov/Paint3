@@ -6,12 +6,15 @@ public class Painter : MonoBehaviour
     public float stepSize;
     LineRenderer line;
 
+    // current color
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             var copy = Instantiate(lineObject);
             line = copy.GetComponent<LineRenderer>();
+            // change color
         }
 
         if (Input.GetKey(KeyCode.Mouse0))
@@ -30,6 +33,7 @@ public class Painter : MonoBehaviour
             line.positionCount++;
             line.SetPosition(line.positionCount-1,pos);
             return;
+
         }
 
         var lastPoint = line.GetPosition(line.positionCount - 1);
