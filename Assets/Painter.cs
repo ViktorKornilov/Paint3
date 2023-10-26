@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class Painter : MonoBehaviour
 {
+    public GameObject lineObject;
     public float stepSize;
     LineRenderer line;
 
-    void Start()
-    {
-        line = GetComponent<LineRenderer>();
-    }
-
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            var copy = Instantiate(lineObject);
+            line = copy.GetComponent<LineRenderer>();
+        }
+
         if (Input.GetKey(KeyCode.Mouse0))
         {
             AddPoint(Input.mousePosition);
